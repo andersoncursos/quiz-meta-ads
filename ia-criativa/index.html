@@ -1,1 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Qual é o seu Nível como Criador com IA? — Anderson Cursos</title>
+<meta name="description" content="Faça o teste em 2 minutos e descubra em qual dos 4 níveis de criação com IA você está hoje.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+:root{
+  --bg:#1C1A16;--bg2:#15130f;--gold:#AD8B3D;--gold-lt:#e8c96a;--gold-dk:#8a6e2f;
+  --ink:#F4F0E8;--ink-70:rgba(244,240,232,0.72);--ink-45:rgba(244,240,232,0.45);
+  --ink-25:rgba(244,240,232,0.25);--line:rgba(173,139,61,0.22);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg2);color:var(--ink);
+  min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:18px;-webkit-font-smoothing:antialiased;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(173,139,61,0.07) 1.3px,transparent 1.3px);background-size:34px 34px;}
+.glow{position:fixed;width:560px;height:560px;pointer-events:none;z-index:0;}
+.glow.tl{top:-220px;left:-220px;background:radial-gradient(circle,rgba(173,139,61,0.10),transparent 70%);}
+.glow.br{bottom:-220px;right:-220px;background:radial-gradient(circle,rgba(173,139,61,0.07),transparent 70%);}
+.frame{position:relative;z-index:1;width:100%;max-width:580px;background:var(--bg);
+  border:1px solid var(--line);border-radius:14px;padding:30px 26px 26px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.55);overflow:hidden;}
+.cnr{position:absolute;width:26px;height:26px;z-index:3;}
+.cnr::before,.cnr::after{content:'';position:absolute;background:var(--gold);}
+.cnr::before{width:100%;height:2px;}.cnr::after{width:2px;height:100%;}
+.cnr.tl{top:13px;left:13px;}.cnr.tr{top:13px;right:13px;transform:rotate(90deg);}
+.cnr.bl{bottom:13px;left:13px;transform:rotate(270deg);}.cnr.br{bottom:13px;right:13px;transform:rotate(180deg);}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;min-height:22px;}
+.brand{display:flex;align-items:center;gap:7px;font-weight:800;letter-spacing:2px;font-size:11px;}
+.brand .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(173,139,61,0.9);}
+.brand .a{color:var(--gold);}.brand .c{color:var(--ink-45);}
+.qcount{font-size:10.5px;letter-spacing:1.5px;color:var(--ink-45);font-weight:600;}
+.pbar{height:4px;background:rgba(173,139,61,0.14);border-radius:99px;overflow:hidden;margin-bottom:24px;}
+.pbar.hide{display:none;}
+.pfill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--gold-dk),var(--gold) 55%,var(--gold-lt));transition:width .5s cubic-bezier(.4,0,.2,1);}
+.screen{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.title{font-size:25px;line-height:1.18;font-weight:800;color:var(--ink);margin-bottom:10px;letter-spacing:-.4px;}
+.title em{color:var(--gold);font-style:normal;}
+.sub{font-size:14.5px;line-height:1.6;color:var(--ink-70);font-weight:400;margin-bottom:22px;}
+.options{display:flex;flex-direction:column;gap:11px;}
+.opt{display:flex;align-items:center;gap:13px;background:rgba(173,139,61,0.05);border:1px solid var(--line);
+  border-radius:11px;padding:15px 16px;cursor:pointer;text-align:left;width:100%;color:var(--ink);
+  font-family:inherit;font-size:14.5px;font-weight:500;line-height:1.35;
+  transition:border-color .18s,background .18s,transform .12s;animation:fadeUp .4s both;}
+.opt:hover{border-color:var(--gold);background:rgba(173,139,61,0.10);}
+.opt:active{transform:scale(.985);}
+.opt.sel{border-color:var(--gold-lt);background:rgba(173,139,61,0.16);}
+.opt .mk{flex:0 0 22px;height:22px;border-radius:50%;border:2px solid var(--gold-dk);display:flex;align-items:center;justify-content:center;transition:all .18s;}
+.opt.sel .mk{background:var(--gold);border-color:var(--gold-lt);}
+.opt .mk::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--bg);transform:scale(0);transition:transform .18s;}
+.opt.sel .mk::after{transform:scale(1);}
+.opt:focus-visible{outline:2px solid var(--gold-lt);outline-offset:2px;}
+.btn{display:block;width:100%;border:none;cursor:pointer;font-family:inherit;font-weight:800;font-size:15px;
+  letter-spacing:.3px;color:#1C1A16;background:linear-gradient(100deg,var(--gold-dk),var(--gold) 45%,var(--gold-lt));
+  padding:16px;border-radius:11px;margin-top:22px;transition:filter .18s,transform .12s;box-shadow:0 8px 24px rgba(173,139,61,0.25);}
+.btn:hover{filter:brightness(1.07);}.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink-70);box-shadow:none;font-weight:600;}
+.btn.ghost:hover{border-color:var(--gold);color:var(--ink);}
+.trust{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px;}
+.trust span{font-size:11px;color:var(--ink-45);font-weight:600;background:rgba(173,139,61,0.06);border:1px solid var(--line);border-radius:99px;padding:6px 11px;}
+.fineprint{font-size:11px;color:var(--ink-25);text-align:center;margin-top:14px;letter-spacing:.3px;}
+.hero-mark{font-size:35px;font-weight:900;letter-spacing:-1px;text-align:center;margin-bottom:6px;}
+.hero-mark .a{color:var(--gold);}.hero-mark .c{color:var(--ink);}
+.hero-tag{text-align:center;font-size:10.5px;letter-spacing:4px;text-transform:uppercase;color:var(--ink-45);margin-bottom:26px;font-weight:600;}
+.sep{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0;}
+.sep .l{width:54px;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold));}
+.sep .l.r{background:linear-gradient(90deg,var(--gold),transparent);}
+.sep .d{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+.field input{width:100%;font-family:inherit;font-size:16px;color:var(--ink);background:rgba(173,139,61,0.05);
+  border:1px solid var(--line);border-radius:10px;padding:14px 15px;transition:border-color .18s;}
+.field input::placeholder{color:var(--ink-25);}
+.field input:focus{outline:none;border-color:var(--gold);}
+.err{color:#e89a6a;font-size:12px;margin-top:6px;font-weight:600;min-height:14px;}
+.lock{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-45);margin-top:16px;font-weight:500;}
+.calc{text-align:center;padding:30px 0 10px;}
+.ring{width:64px;height:64px;margin:0 auto 22px;border:3px solid rgba(173,139,61,0.18);border-top-color:var(--gold);border-radius:50%;animation:spin 0.9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.calc-line{font-size:14.5px;color:var(--ink-70);min-height:20px;font-weight:500;letter-spacing:.3px;}
+.res-badge{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:8px;}
+.res-level{text-align:center;font-size:13px;color:var(--ink-45);letter-spacing:2px;font-weight:600;text-transform:uppercase;}
+.res-name{text-align:center;font-size:30px;font-weight:900;color:var(--gold);letter-spacing:-.5px;margin:4px 0 4px;}
+.res-dots{display:flex;gap:6px;justify-content:center;margin:14px 0 20px;}
+.res-dots i{width:30px;height:5px;border-radius:99px;background:rgba(173,139,61,0.18);}
+.res-dots i.on{background:linear-gradient(90deg,var(--gold),var(--gold-lt));}
+.res-text{font-size:14.5px;line-height:1.65;color:var(--ink-70);margin-bottom:16px;}
+.res-text strong{color:var(--ink);}
+.callout{background:rgba(173,139,61,0.09);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 16px;margin:18px 0;}
+.callout .ct{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+.callout p{font-size:13.5px;line-height:1.55;color:var(--ink-70);}
+.offer{border:1px solid var(--line);border-radius:11px;padding:16px;margin:18px 0;background:rgba(0,0,0,0.18);}
+.offer .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(173,139,61,0.10);font-size:13px;gap:10px;}
+.offer .row:last-child{border-bottom:none;}
+.offer .row .k{color:var(--ink-45);font-weight:600;white-space:nowrap;}
+.offer .row .v{color:var(--ink);font-weight:700;text-align:right;}
+.offer .v.gold{color:var(--gold-lt);}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(100deg,#1faa55,#25D366);
+  color:#08361b;text-decoration:none;font-weight:800;font-size:15px;padding:16px;border-radius:11px;margin-top:4px;
+  box-shadow:0 8px 24px rgba(37,211,102,0.22);transition:filter .18s,transform .12s;}
+.wa-btn:hover{filter:brightness(1.06);}.wa-btn:active{transform:translateY(1px);}
+.foot{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid rgba(173,139,61,0.10);font-size:10.5px;letter-spacing:1px;color:var(--ink-25);font-weight:600;}
+@media (max-width:430px){.frame{padding:26px 18px 20px;}.title{font-size:22px;}.hero-mark{font-size:30px;}.res-name{font-size:26px;}}
+@media (prefers-reduced-motion:reduce){.screen,.opt{animation:none!important;}.pfill{transition:none;}.ring{animation-duration:0s;}}
+</style>
+</head>
+<body>
+<div class="glow tl"></div><div class="glow br"></div>
+<main class="frame" role="main">
+  <span class="cnr tl"></span><span class="cnr tr"></span><span class="cnr bl"></span><span class="cnr br"></span>
+  <div class="top">
+    <div class="brand"><span class="dot"></span><span class="a">ANDERSON</span><span class="c">CURSOS</span></div>
+    <div class="qcount" id="qcount"></div>
+  </div>
+  <div class="pbar" id="pbar"><div class="pfill" id="pfill"></div></div>
+  <div id="stage"></div>
+</main>
 
+<script>
+/* ============================================================
+   QUIZ "NÍVEL COMO CRIADOR COM IA" — qualificação · IA Criativa
+   Curso: criar imagens e vídeos profissionais com IA
+   Modelo de quiz funnel de diagnóstico (estilo DESPERTAR)
+   ------------------------------------------------------------
+   >>> EDITE SÓ O CONFIG ABAIXO
+   ============================================================ */
+const CONFIG = {
+  whatsapp: "5583996584198",
+  sheetUrl: "https://script.google.com/macros/s/AKfycbypD96FHOGwGaEwffDUE5LGbrNyEMSEcyeS5m6M_Uj5rw-1S75E6j5PbayveXhr1Q22/exec",  // MESMA planilha
+  webhook:  "",
+  curso:    "IA Criativa",
+  turma:    "01 e 02 de Julho (sáb e dom)",
+  carga:    "Sáb e Dom",
+  horario:  "9h às 18h",
+  preco:    "R$ 630 à vista · 6× sem juros de R$ 105",
+  cidade:   "João Pessoa — PB",
+  vagas:    "8 vagas por turma"
+};
+
+/* ----------------- TELAS ----------------- */
+const STEPS = [
+
+  { type:"cover" },
+
+  { id:"exp", q:true, title:"Você já criou <em>imagens ou vídeos com IA</em>?",
+    options:[
+      { t:"Nunca, só vejo os outros fazendo",         lvl:1, ql:1 },
+      { t:"Já testei brincando (ChatGPT e afins)",    lvl:2, ql:2 },
+      { t:"Já crio com certa frequência",             lvl:3, ql:3 },
+      { t:"Já produzo conteúdo profissional com IA",  lvl:4, ql:3 },
+    ] },
+
+  { id:"trava", q:true, title:"O que mais te <em>trava</em> hoje na criação com IA?",
+    options:[
+      { t:"Não sei nem por onde começar",             lvl:1, ql:2 },
+      { t:"Tento, mas fica amador / com 'cara de IA'",lvl:2, ql:3 },
+      { t:"Faço imagens, mas travo nos vídeos",       lvl:3, ql:3 },
+      { t:"Quero profissionalizar e vender meu trabalho", lvl:3, ql:3 },
+    ] },
+
+  { type:"info", eyebrow:"Você está em boa companhia",
+    title:"+10.000 pessoas já passaram por aqui",
+    sub:"Nota 5,0 no Google com mais de 160 avaliações verificadas. Continue — faltam poucas perguntas pro seu diagnóstico.",
+    cta:"Continuar" },
+
+  { id:"objetivo", q:true, title:"Qual seu <em>objetivo principal</em> com IA criativa?",
+    options:[
+      { t:"Criar conteúdo pro meu negócio/marca",     ql:3, flag:"negocio" },
+      { t:"Oferecer criação como serviço a clientes", ql:3 },
+      { t:"Trocar de profissão / nova fonte de renda",ql:2 },
+      { t:"Dominar as ferramentas por interesse",     ql:2 },
+    ] },
+
+  { id:"contexto", q:true, title:"Você tem <em>onde aplicar</em> isso agora?",
+    options:[
+      { t:"Sim, no meu negócio/conteúdo",             ql:3, flag:"negocio" },
+      { t:"Sim, pra clientes",                        ql:3 },
+      { t:"Ainda não, quero aprender primeiro",       ql:1 },
+    ] },
+
+  { id:"ferramentas", q:true, title:"Você já usa alguma <em>ferramenta de IA</em> pra criar?",
+    options:[
+      { t:"Nenhuma ainda",                            ql:1 },
+      { t:"Só as gratuitas / básicas",                ql:2 },
+      { t:"Já uso ferramentas pagas",                 ql:3 },
+      { t:"Uso várias no meu fluxo de trabalho",      ql:3 },
+    ] },
+
+  { id:"urgencia", q:true, title:"Quando você quer <em>começar a criar de verdade</em>?",
+    options:[
+      { t:"Pra ontem",                                ql:3, flag:"urgente" },
+      { t:"Nos próximos 30 dias",                     ql:3, flag:"urgente" },
+      { t:"Em alguns meses",                          ql:1 },
+      { t:"Só pesquisando por enquanto",              ql:0 },
+    ] },
+
+  { type:"info", eyebrow:"Quase lá",
+    title:"Suas respostas estão revelando um padrão claro…",
+    sub:"Faltam poucas perguntas pra fechar seu perfil. Essa parte é a que mais define o seu próximo passo.",
+    cta:"Quero ver" },
+
+  { id:"local", q:true, title:"Você está em <em>João Pessoa</em> ou região?",
+    options:[
+      { t:"Sim, João Pessoa / PB",                    ql:3 },
+      { t:"Região metropolitana",                     ql:3 },
+      { t:"Outra cidade da Paraíba",                  ql:1, flag:"fora_parcial" },
+      { t:"Outro estado",                             ql:0, flag:"fora" },
+    ] },
+
+  { id:"horario", q:true, title:`A turma é presencial, no <em>fim de semana</em> (sáb e dom), das ${CONFIG.horario}. Você consegue participar?`,
+    options:[
+      { t:"Sim, perfeito",                            ql:3 },
+      { t:"Consigo me organizar pra esse fim de semana", ql:2 },
+      { t:"Só conseguiria em outra data",             ql:1, flag:"horario_outro" },
+      { t:"Não consigo no fim de semana",             ql:0, flag:"horario_nao" },
+    ] },
+
+  { id:"identidade", q:true, title:"O que mais <em>combina com você</em> hoje?",
+    options:[
+      { t:"Parar de ficar pra trás nessa onda da IA", ql:2 },
+      { t:"Criar conteúdo melhor e mais rápido",      ql:2 },
+      { t:"Profissionalizar e viver de criação",      ql:3 },
+      { t:"Virar referência em conteúdo com IA",      ql:2 },
+    ] },
+
+  { id:"compromisso", q:true, title:"Quão <em>comprometido</em> você está em resolver isso?",
+    options:[
+      { t:"Só curiosidade",                           ql:0 },
+      { t:"Interessado",                              ql:1 },
+      { t:"Decidido a aprender",                      ql:3 },
+      { t:"Já era pra ter feito ontem",               ql:3, flag:"urgente" },
+    ] },
+
+  { type:"capture" },
+  { type:"calc" },
+  { type:"result" },
+];
+
+/* ----------------- RESULTADOS (o que o LEAD vê) ----------------- */
+const LEVELS = {
+  1:{ tag:"Nível 1 de 4", name:"O Espectador",
+      text:"Você vê os vídeos e imagens criados com IA rolando por aí e pensa: <strong>'queria saber fazer isso'</strong>. A boa notícia é que a distância entre assistir e criar é menor do que parece — com as ferramentas e o caminho certos, em um fim de semana você sai criando o que hoje só admira.",
+      next:"Sair do zero e criar suas primeiras imagens e vídeos com qualidade, sem 'cara de IA'." },
+  2:{ tag:"Nível 2 de 4", name:"O Explorador",
+      text:"Você já brincou com IA — mas o resultado sai amador, inconsistente, com aquela <strong>'cara de IA'</strong> que entrega que foi no improviso. O problema não é a ferramenta, é o método: prompt, referência e direção. Com isso, seu resultado salta de nível.",
+      next:"Dominar o método pra gerar imagens e vídeos consistentes e profissionais." },
+  3:{ tag:"Nível 3 de 4", name:"O Criador",
+      text:"Você já cria coisas boas — seu próximo salto é <strong>consistência e vídeo</strong>: manter identidade, evoluir das imagens pros vídeos e entregar trabalho com padrão profissional (e cobrar por isso).",
+      next:"Profissionalizar seu fluxo, dominar vídeo com IA e começar a monetizar." },
+  4:{ tag:"Nível 4 de 4", name:"O Diretor",
+      text:"Você já produz conteúdo profissional com IA. O próximo nível é <strong>direção cinematográfica</strong>: fluxo avançado de imagem + vídeo, consistência de personagem e cena, e produções que impressionam. Quem chega aqui não quer 'aprender a usar IA' — quer dirigir.",
+      next:"Dominar o fluxo cinematográfico de ponta e vender produções de alto valor." },
+};
+
+/* ----------------- ESTADO ----------------- */
+let idx=0; const answers={}; const lead={nome:"",whatsapp:""};
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const stage=document.getElementById("stage");
+const pbar=document.getElementById("pbar"), pfill=document.getElementById("pfill"), qcount=document.getElementById("qcount");
+const totalQ=STEPS.filter(s=>s.q).length;
+
+function computeScores(){
+  let nivel=0,qual=0; const flags=new Set();
+  STEPS.forEach(s=>{ if(!s.options)return; const a=answers[s.id]; if(a==null)return;
+    const o=s.options[a]; if(o.lvl)nivel+=o.lvl; if(o.ql)qual+=o.ql; if(o.flag)flags.add(o.flag); });
+  let level; if(nivel<=3)level=1; else if(nivel<=5)level=2; else if(nivel<=6)level=3; else level=4;
+  let temp;
+  if(flags.has("fora")||flags.has("horario_nao")) temp="frio_online";
+  else if(qual>=22) temp="quente";
+  else if(qual>=14) temp="morno";
+  else temp="frio";
+  return {level,qual,temp,flags:[...flags]};
+}
+function progressDone(){ let d=0; for(let i=0;i<idx;i++){ if(STEPS[i].q)d++; } return d; }
+function renderProgress(){
+  const s=STEPS[idx];
+  if(s.q||s.type==="capture"){ pbar.classList.remove("hide");
+    const d=progressDone(); pfill.style.width=Math.round((d/totalQ)*100)+"%"; qcount.textContent=s.q?`${d+1} / ${totalQ}`:""; }
+  else if(s.type==="result"||s.type==="calc"){ pfill.style.width="100%"; pbar.classList.add("hide"); qcount.textContent=""; }
+  else { pbar.classList.add("hide"); qcount.textContent=""; }
+}
+function go(n){ idx=n; render(); window.scrollTo({top:0,behavior:reduce?"auto":"smooth"}); }
+function el(html){ stage.innerHTML=`<div class="screen">${html}</div>`; return stage.firstElementChild; }
+
+function render(){
+  const s=STEPS[idx]; renderProgress();
+  if(s.type==="cover")   return renderCover();
+  if(s.type==="info")    return renderInfo(s);
+  if(s.type==="capture") return renderCapture();
+  if(s.type==="calc")    return renderCalc();
+  if(s.type==="result")  return renderResult();
+  return renderQuestion(s);
+}
+function renderCover(){
+  el(`
+    <div class="hero-tag">Teste do Criador com IA · 2 minutos</div>
+    <div class="hero-mark"><span class="a">QUAL É O</span> <span class="c">SEU NÍVEL</span></div>
+    <div class="sep"><span class="l"></span><span class="d"></span><span class="l r"></span></div>
+    <h1 class="title" style="text-align:center">Descubra em qual dos <em>4 níveis</em> de criação com IA você está</h1>
+    <p class="sub" style="text-align:center">Responda 10 perguntas rápidas e descubra seu momento criando imagens e vídeos com IA — com o caminho exato pro próximo nível.</p>
+    <button class="btn" id="start">Começar o teste →</button>
+    <div class="trust"><span>+10.000 alunos formados</span><span>Nota 5,0 no Google</span><span>+160 avaliações</span></div>
+    <p class="fineprint">100% gratuito · sem enrolação</p>
+  `);
+  document.getElementById("start").onclick=()=>go(idx+1);
+}
+function renderQuestion(step){
+  const num=progressDone()+1;
+  const opts=step.options.map((o,i)=>`
+    <button class="opt ${answers[step.id]===i?"sel":""}" data-i="${i}" style="animation-delay:${i*55}ms">
+      <span class="mk"></span><span>${o.t}</span></button>`).join("");
+  el(`
+    <p class="eyebrow">Pergunta ${num}</p>
+    <h2 class="title">${step.title}</h2>
+    <div class="options">${opts}</div>
+    ${idx>1?`<button class="btn ghost" id="back" style="margin-top:14px">← Voltar</button>`:""}
+  `);
+  stage.querySelectorAll(".opt").forEach(b=>{ b.onclick=()=>{
+    answers[step.id]=+b.dataset.i;
+    stage.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));
+    b.classList.add("sel"); setTimeout(()=>go(idx+1),reduce?0:260);
+  };});
+  const back=document.getElementById("back"); if(back)back.onclick=()=>go(idx-1);
+}
+function renderInfo(step){
+  el(`<p class="eyebrow">${step.eyebrow}</p><h2 class="title">${step.title}</h2><p class="sub">${step.sub}</p><button class="btn" id="next">${step.cta} →</button>`);
+  document.getElementById("next").onclick=()=>go(idx+1);
+}
+function renderCapture(){
+  el(`
+    <p class="eyebrow">Seu diagnóstico está pronto</p>
+    <h2 class="title">Pra onde enviamos o seu <em>resultado</em>?</h2>
+    <p class="sub">Preencha pra desbloquear seu nível e o passo a passo personalizado.</p>
+    <div class="field"><label for="nome">Seu nome</label><input id="nome" type="text" placeholder="Como podemos te chamar?" value="${lead.nome}"></div>
+    <div class="field"><label for="wpp">WhatsApp (com DDD)</label><input id="wpp" type="tel" inputmode="numeric" placeholder="83 9 9999-9999" value="${lead.whatsapp}"></div>
+    <div class="err" id="err"></div>
+    <button class="btn" id="reveal">Ver meu resultado →</button>
+    <div class="lock">🔒 Seus dados estão seguros. Sem spam.</div>
+  `);
+  const nome=document.getElementById("nome"),wpp=document.getElementById("wpp"),err=document.getElementById("err");
+  document.getElementById("reveal").onclick=()=>{
+    const n=nome.value.trim(); const d=wpp.value.replace(/\D/g,"");
+    if(n.length<2){err.textContent="Digite seu nome pra continuar.";nome.focus();return;}
+    if(d.length<10){err.textContent="Digite um WhatsApp válido com DDD.";wpp.focus();return;}
+    lead.nome=n; lead.whatsapp=d; go(idx+1);
+  };
+}
+function renderCalc(){
+  const lines=["Analisando suas respostas…","Cruzando com +10.000 perfis…","Definindo seu nível…"];
+  el(`<div class="calc"><div class="ring"></div><p class="calc-line" id="cl">${lines[0]}</p></div>`);
+  if(reduce)return go(idx+1);
+  let i=0; const cl=document.getElementById("cl");
+  const t=setInterval(()=>{ i++; if(i<lines.length)cl.textContent=lines[i]; },850);
+  setTimeout(()=>{ clearInterval(t); go(idx+1); },2600);
+}
+function renderResult(){
+  const s=computeScores(); const L=LEVELS[s.level];
+  const dots=[1,2,3,4].map(n=>`<i class="${n<=s.level?"on":""}"></i>`).join("");
+  const presencialOk=!(s.temp==="frio_online");
+  const offerBlock=presencialOk?`
+    <div class="offer">
+      <div class="row"><span class="k">Curso</span><span class="v">${CONFIG.curso} · presencial</span></div>
+      <div class="row"><span class="k">Próxima turma</span><span class="v gold">${CONFIG.turma}</span></div>
+      <div class="row"><span class="k">Horário</span><span class="v">${CONFIG.carga} · ${CONFIG.horario}</span></div>
+      <div class="row"><span class="k">Investimento</span><span class="v">${CONFIG.preco}</span></div>
+      <div class="row"><span class="k">Onde</span><span class="v">${CONFIG.cidade} · ${CONFIG.vagas}</span></div>
+    </div>`:`
+    <div class="callout"><div class="ct">Atenção</div>
+      <p>Nosso curso de ${CONFIG.curso} é <strong>presencial em ${CONFIG.cidade}, no fim de semana (das ${CONFIG.horario})</strong>. Como esse não é seu caso agora, fale com a gente pra entrar na lista de espera e receber materiais gratuitos.</p></div>`;
+  const waText=buildWhatsAppMessage(s,L);
+  const waLink=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(waText)}`;
+  const ctaLabel=presencialOk?"Garantir minha vaga no WhatsApp":"Falar com a equipe no WhatsApp";
+  el(`
+    <p class="res-badge">Seu resultado, ${lead.nome.split(" ")[0]}</p>
+    <p class="res-level">${L.tag}</p>
+    <h2 class="res-name">${L.name}</h2>
+    <div class="res-dots">${dots}</div>
+    <p class="res-text">${L.text}</p>
+    <div class="callout"><div class="ct">Seu próximo nível</div><p>${L.next}</p></div>
+    ${offerBlock}
+    <a class="wa-btn" href="${waLink}" target="_blank" rel="noopener"><span style="font-size:18px">💬</span> ${ctaLabel}</a>
+    <div class="foot"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);display:inline-block"></span> ANDERSON CURSOS · andersoncursos.com</div>
+  `);
+  sendLead(s,L);
+}
+function buildWhatsAppMessage(s,L){
+  const pick=(id)=>{ const st=STEPS.find(x=>x.id===id); const a=answers[id]; return st&&a!=null?st.options[a].t:"—"; };
+  return [
+    `Olá, Anderson! Fiz o Teste do Criador com IA.`,``,
+    `🎯 Meu resultado: ${L.name} (${L.tag})`,
+    `• Experiência: ${pick("exp")}`,
+    `• Maior trava: ${pick("trava")}`,
+    `• Objetivo: ${pick("objetivo")}`,
+    `• Onde estou: ${pick("local")}`,
+    `• Disponibilidade (sáb/dom ${CONFIG.horario}): ${pick("horario")}`,
+    `• Quero começar: ${pick("urgencia")}`,``,
+    `Meu WhatsApp: ${lead.whatsapp}`,
+    `Quero saber sobre a próxima turma do curso de ${CONFIG.curso}!`
+  ].join("\n");
+}
+function sendLead(s,L){
+  const tempLabel={quente:"🔥 QUENTE",morno:"🟡 MORNO",frio:"🔵 FRIO",frio_online:"🔵 FRIO (fora/fim de semana)"}[s.temp];
+  const payload={ origem:"quiz-nivel-ia-criativa", curso:CONFIG.curso, nome:lead.nome, whatsapp:lead.whatsapp,
+    nivel:L.name, nivel_num:s.level, temperatura:tempLabel, qual_score:s.qual, flags:s.flags,
+    respostas:Object.fromEntries(STEPS.filter(x=>x.options&&answers[x.id]!=null).map(x=>[x.id,x.options[answers[x.id]].t])),
+    timestamp:new Date().toISOString() };
+  console.log("LEAD:\n"+JSON.stringify(payload,null,2));
+  if(CONFIG.sheetUrl){ fetch(CONFIG.sheetUrl,{method:"POST",mode:"no-cors",body:JSON.stringify(payload)}).catch(()=>{}); }
+  if(CONFIG.webhook){ fetch(CONFIG.webhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).catch(()=>{}); }
+}
+render();
+</script>
+</body>
+</html>
